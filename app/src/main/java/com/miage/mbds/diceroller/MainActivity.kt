@@ -19,8 +19,22 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
 
         val rollButton : Button = findViewById(R.id.button)
+        val resultTextView1:TextView = findViewById(R.id.textView1)
+        val resultTextView2:TextView = findViewById(R.id.textView2)
+        val messageTextView:TextView = findViewById(R.id.resultTextView)
+
         rollButton.setOnClickListener{
-            RollDice()
+            val result1 = RollDice()
+            val result2 = RollDice()
+
+            resultTextView1.text = "Dé 1 : $result1"
+            resultTextView2.text = "Dé 2 : $result2"
+
+            if (result1 == result2){
+                messageTextView.text = "Félicitations ! Vous avez gagné !"
+            }else{
+                messageTextView.text = "Vous avez perdu!"
+            }
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -29,11 +43,10 @@ class MainActivity : AppCompatActivity(){
         }
     }
 
-    private fun RollDice() {
+    private fun RollDice() : Int{
         val dice = Dice(6)
         val diceRoll = dice.roll()
-        val resultTextView : TextView = findViewById(R.id.textView)
-        resultTextView.text = diceRoll.toString()
+        return diceRoll
     }
 }
 
