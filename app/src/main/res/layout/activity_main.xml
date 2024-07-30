@@ -28,13 +28,25 @@
         android:layout_marginTop="20dp"
         tools:text="2" />
 
+    <EditText
+        android:id="@+id/targetNumberInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="1..6"
+        android:hint="@string/nb_cible"
+        android:textSize="30sp"
+        android:inputType="number"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textView2"
+        android:layout_marginTop="20dp" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="100dp"
         android:text="@string/roll"
         android:textAlignment="center"
         android:textColor="@color/white"

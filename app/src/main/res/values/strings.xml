@@ -3,4 +3,5 @@
     <string name="roll">Roll</string>
     <string name="de1">Dé 1 :</string>
     <string name="de2">De 2</string>
+    <string name="nb_cible">Entrez un nombre cible:</string>
 </resources>
