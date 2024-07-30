@@ -1,4 +1,4 @@
-package com.exemple.diceroller
+package com.miage.mbds.diceroller
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,8 +8,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.exemple.diceroller.R
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity(){
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
