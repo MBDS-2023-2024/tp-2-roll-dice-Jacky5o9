@@ -4,4 +4,6 @@
     <string name="de1">Dé 1 :</string>
     <string name="de2">De 2</string>
     <string name="nb_cible">Entrez un nombre cible:</string>
+    <string name="nb_cible1">Définir le nombre à trouver :</string>
+    <string name="nb_find">Définir le nombre à trouver :</string>
 </resources>

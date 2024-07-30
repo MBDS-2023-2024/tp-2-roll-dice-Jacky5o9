@@ -2,72 +2,72 @@ package com.miage.mbds.diceroller
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.Button
+import android.view.animation.AnimationUtils
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.exemple.diceroller.R
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var diceImage1: ImageView
+    private lateinit var diceImage2: ImageView
+    private lateinit var targetNumberEditText: EditText
+    private lateinit var resultTextView: TextView
+    private val diceImages = listOf(
+        R.drawable.dice_1, R.drawable.dice_2, R.drawable.dice_3,
+        R.drawable.dice_4, R.drawable.dice_5, R.drawable.dice_6
+    )
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        val rollButton: Button = findViewById(R.id.button)
-        val resultTextView1: TextView = findViewById(R.id.textView1)
-        val resultTextView2: TextView = findViewById(R.id.textView2)
-        val messageTextView: TextView = findViewById(R.id.resultTextView)
-        val targetNumberEditText: EditText = findViewById(R.id.targetNumberInput)
+        diceImage1 = findViewById(R.id.diceImage1)
+        diceImage2 = findViewById(R.id.diceImage2)
+        targetNumberEditText = findViewById(R.id.targetNumberInput)
+        resultTextView = findViewById(R.id.resultTextView)
 
-        targetNumberEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                rollButton.isEnabled = !s.isNullOrEmpty()
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-
-        rollButton.setOnClickListener {
+        val clickListener = { _: ImageView ->
             val targetNumber = targetNumberEditText.text.toString().toIntOrNull()
             if (targetNumber == null || targetNumber < 2 || targetNumber > 12) {
-                messageTextView.text = "Veuillez entrer un nombre entre 2 et 12."
-                return@setOnClickListener
+                resultTextView.text = "Veuillez entrer un nombre entre 2 et 12."
+                return
             }
 
-            val result1 = rollDice()
-            val result2 = rollDice()
+            val result1 = rollDice(diceImage1)
+            val result2 = rollDice(diceImage2)
             val sum = result1 + result2
 
-            resultTextView1.text = "Dé 1 : $result1"
-            resultTextView2.text = "Dé 2 : $result2"
-
             if (sum == targetNumber) {
-                messageTextView.text = "Félicitations ! Vous avez gagné ! La somme est $sum."
+                resultTextView.text = "Félicitations ! Vous avez gagné ! La somme est $sum."
+                startWinAnimation()
             } else {
-                messageTextView.text = "Dommage ! Vous avez perdu. La somme est $sum."
+                resultTextView.text = "Dommage ! Vous avez perdu. La somme est $sum."
             }
         }
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-    }
-}
 
-private fun rollDice(): Int {
-    val dice = Dice(6)
-    val diceRoll = dice.roll()
-    return diceRoll
+        diceImage1.setOnClickListener(clickListener)
+        diceImage2.setOnClickListener(clickListener)
+    }
+
+    private fun rollDice(diceImage: ImageView): Int {
+        val dice = Dice(6)
+        val diceRoll = dice.roll()
+        val drawableResource = diceImages[diceRoll - 1]
+        diceImage.setImageResource(drawableResource)
+        return diceRoll
+    }
+
+    private fun startWinAnimation() {
+        val animation = AnimationUtils.loadAnimation(this, R.anim.shake)
+        diceImage1.startAnimation(animation)
+        diceImage2.startAnimation(animation)
+        // Alternatively, use an animation with sparkles or other effects
+    }
 }
 
 
