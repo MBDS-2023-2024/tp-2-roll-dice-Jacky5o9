@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             val targetNumber = targetNumberEditText.text.toString().toIntOrNull()
             if (targetNumber == null || targetNumber < 2 || targetNumber > 12) {
                 resultTextView.text = "Veuillez entrer un nombre entre 2 et 12."
-                return
+                return@setOnClickListener
             }
 
             val result1 = rollDice(diceImage1)
